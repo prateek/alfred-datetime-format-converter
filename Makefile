@@ -3,10 +3,12 @@ OUTPUT_NAME := $(BUILD)/DatetimeFormatConverter.alfredworkflow
 SRC := $(abspath ./workflow)
 
 setup:
-	mkdir -p $(BUILD)
+	@mkdir -p $(BUILD)
 
 package: setup
-	COPYFILE_DISABLE=1 tar czf $(OUTPUT_NAME) --directory $(SRC) .
+	@cd $(SRC) && zip -rq $(OUTPUT_NAME) . || echo "Unable to create zip file"
+	@echo "Successfully created output: $(OUTPUT_NAME)"
+	@echo "Open to install."
 
 install: clean package
 	open $(OUTPUT_NAME)
