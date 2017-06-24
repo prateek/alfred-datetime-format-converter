@@ -21,6 +21,10 @@ def parse_query_value(query_str):
         else:
             # Parse datetime string or timestamp
             try:
+                if query_str.isdigit() and len(query_str) == 13:
+                    query_str = query_str[:10] + '.' + query_str[10:]
+                if query_str.isdigit() and len(query_str) == 19:
+                    query_str = query_str[:10] + '.' + query_str[10:]
                 d = epoch(float(query_str))
             except ValueError:
                 d = parse(str(query_str))
@@ -43,7 +47,7 @@ def alfred_items_for_value(value):
         title=str(item_value),
         subtitle=u'UTC Timestamp',
         attributes={
-            'uid': alfred.uid(index), 
+            'uid': alfred.uid(index),
             'arg': item_value,
         },
         icon='icon.png',
@@ -55,9 +59,9 @@ def alfred_items_for_value(value):
         # 1937-01-01 12:00:27
         ("%Y-%m-%d %H:%M:%S", ''),
         # 19 May 2002 15:21:36
-        ("%d %b %Y %H:%M:%S", ''), 
+        ("%d %b %Y %H:%M:%S", ''),
         # Sun, 19 May 2002 15:21:36
-        ("%a, %d %b %Y %H:%M:%S", ''), 
+        ("%a, %d %b %Y %H:%M:%S", ''),
         # 1937-01-01T12:00:27
         ("%Y-%m-%dT%H:%M:%S", ''),
         # 1996-12-19T16:39:57-0800
@@ -69,7 +73,7 @@ def alfred_items_for_value(value):
             title=str(item_value),
             subtitle=description,
             attributes={
-                'uid': alfred.uid(index), 
+                'uid': alfred.uid(index),
                 'arg': item_value,
             },
         icon='icon.png',
